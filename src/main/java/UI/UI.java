@@ -1,3 +1,6 @@
+package UI;
+
+import application.WeatherRetriever;
 import com.neovisionaries.i18n.CountryCode;
 import java.util.Scanner;
 
