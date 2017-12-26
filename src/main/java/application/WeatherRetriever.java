@@ -171,7 +171,7 @@ public class WeatherRetriever {
         return jsonParser.getIntegerValue("clouds", "all") + "%";
     }
 
-    private String ambientPressure() {
+    private String atmosphericPressure() {
         Integer atmosphericPressure = Math.round(jsonParser.getIntegerValue("main", "pressure"));
 
         return atmosphericPressure + " hPa | "
@@ -215,7 +215,7 @@ public class WeatherRetriever {
                     + "Wind direction: " + windDirection() + "\n"
                     + "Precipitation: Rain - " + rain() + " | Snow - " + snow() + "\n"
                     + "Cloudiness: " + cloudiness() + "\n"
-                    + "Atm. pressure: " + ambientPressure() + "\n"
+                    + "Atm. pressure: " + atmosphericPressure() + "\n"
                     + "Humidity: " + humidity() + "\n"
                     + "Visibility: " + visibility();
         }
