@@ -1,5 +1,5 @@
 # OpenWeatherProvider
-Weather provider from www.openweathermap.com, using actual and 24-hour forecast weather API
+Weather provider from www.openweathermap.org, using actual and 24-hour forecast weather API
 
 ## Using the help of:
 
