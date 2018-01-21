@@ -8,8 +8,6 @@ import java.util.Scanner;
 public class JsonParser {
 
     private String address;
-    private URL url;
-    private Scanner scanner;
     private JSONObject jsonObject;
 
     public JsonParser(String location, String type) throws Exception {
@@ -20,8 +18,8 @@ public class JsonParser {
         this.address = "http://api.openweathermap.org/data/2.5/" + type + "?q=" + location +
                     "&units=metric&appid=80fc7e80b77747ecf59857c3c0562263"; // Free API Key
 
-        this.url = new URL(address);
-        this.scanner = new Scanner(url.openStream());
+        URL url = new URL(address);
+        Scanner scanner = new Scanner(url.openStream());
 
         String rawData = "";
         while (scanner.hasNext()){
@@ -108,10 +106,10 @@ public class JsonParser {
     }
 
     public String getStringFromNestedArray(String key, String value, int index) {
-        JSONArray arr = jsonObject.getJSONArray("list");
-        JSONArray asd = arr.getJSONObject(index).getJSONArray(key);
+        JSONArray parentArray = jsonObject.getJSONArray("list");
+        JSONArray nestedArray = parentArray.getJSONObject(index).getJSONArray(key);
 
-        return asd.getJSONObject(0).get(value).toString();
+        return nestedArray.getJSONObject(0).get(value).toString();
 
         //int index is global list index
         //index 0 = unique index from nested array

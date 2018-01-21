@@ -22,7 +22,7 @@ public class UI {
 
             System.out.print("\n- Welcome to OpenWeatherMap weather-retriever!" +
                     "\n\n- Please, type the city name to show the weather, or type \"quit\" to exit: ");
-            cityName = formatter(reader.nextLine().toLowerCase());
+            cityName = userInputFormatter(reader.nextLine().toLowerCase());
 
             if (cityName.equals("Quit")) {
                 System.out.println("\n☺ Good bye!");
@@ -33,7 +33,7 @@ public class UI {
 
             while (true) {
                 System.out.print("\n- Which country?: ");
-                countryName = formatter(reader.nextLine().toLowerCase());
+                countryName = userInputFormatter(reader.nextLine().toLowerCase());
 
                 if (searchCountryCode(countryName) == null) {
                     System.out.println("\n! Country not found please, try again");
@@ -73,7 +73,7 @@ public class UI {
         return null;
     }
 
-    public String formatter(String str) {
+    public String userInputFormatter(String str) {
         try {
             str = str.substring(0, 1).toUpperCase() + str.substring(1); // First letter to UpperCase
         } catch (StringIndexOutOfBoundsException e) {
