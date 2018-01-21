@@ -127,40 +127,20 @@ public class WeatherRetriever {
         return cardinalDirection;
     }
 
-    private String rain() {
-        Integer rainAmountInMillimeters;
+    private String precipitation(String type) {
+        Integer amountInMillimeters;
 
         try {
             if (actualOrForecast.equals("actual")) {
-                rainAmountInMillimeters = jsonParser.getIntegerValue("rain", "3h");
+                amountInMillimeters = jsonParser.getIntegerValue(type, "3h");
             } else {
-                rainAmountInMillimeters = jsonParser.getIntegerValueFromArray("rain", "3h", index);
+                amountInMillimeters = jsonParser.getIntegerValueFromArray(type, "3h", index);
             }
 
-            if (rainAmountInMillimeters < 1) {
+            if (amountInMillimeters < 1) {
                 return "<1mm";
             } else {
-                return rainAmountInMillimeters + " mm";
-            }
-        } catch (JSONException e) {
-            return "n/a";
-        }
-    }
-
-    private String snow() {
-        Integer snowAmountInMillimeters;
-
-        try {
-            if (actualOrForecast.equals("actual")) {
-                snowAmountInMillimeters = jsonParser.getIntegerValue("snow", "3h");
-            } else {
-                snowAmountInMillimeters = jsonParser.getIntegerValueFromArray("snow", "3h", 0);
-            }
-
-            if (snowAmountInMillimeters < 1) {
-                return "<1mm";
-            } else {
-                return snowAmountInMillimeters + " mm";
+                return amountInMillimeters + " mm";
             }
         } catch (JSONException e) {
             return "n/a";
@@ -195,25 +175,29 @@ public class WeatherRetriever {
     }
 
     public String toString() {
-        String output = "\nWeather for " + location() + "\n";
+        String output = "";
 
         if (actualOrForecast.equals("forecast")) {
+            output += "\nWeather forecast for " + location() + " (By 3hs interval)\n";
             while (index <= 8) {
                 output += "\nTime: " + timeStamp() + "\n"
                         + "Condition: " + condition() + "\n"
                         + "Temperature: " + temperature() + "\n"
                         + "Wind speed: " + windSpeed() + "\n"
                         + "Wind direction: " + windDirection() + "\n"
-                        + "Precipitation: Rain - " + rain() + " | Snow - " + snow() + "\n";
+                        + "Precipitation: Rain - " + precipitation("rain")
+                        + " | Snow - " + precipitation("snow") + "\n";
                 index++;
             }
         } else {
-            output += "\nTime: " + timeStamp() + "\n"
+            output += "\nWeather for " + location() + "\n"
+                    + "\nTime: " + timeStamp() + "\n"
                     + "Condition: " + condition() + "\n"
                     + "Temperature: " + temperature() + "\n"
                     + "Wind speed: " + windSpeed() + "\n"
                     + "Wind direction: " + windDirection() + "\n"
-                    + "Precipitation: Rain - " + rain() + " | Snow - " + snow() + "\n"
+                    + "Precipitation: Rain - " + precipitation("rain")
+                    + " | Snow - " + precipitation("snow") + "\n"
                     + "Cloudiness: " + cloudiness() + "\n"
                     + "Atm. pressure: " + atmosphericPressure() + "\n"
                     + "Humidity: " + humidity() + "\n"
